@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  hsa_structs_and_algo_server:
+    container_name: hsa_structs_and_algo_server
+    build:          ./server
+    expose:
+      - 3000
+    ports:
+      - 0.0.0.0:9999:3000
+      - 0.0.0.0:9998:9249
+    command:        npm run start:debug
+    volumes:
+      - ./server:/usr/src/app
+    networks:
+      hsa_structs_and_algo_net:
+        ipv4_address: 172.16.125.10
+
+networks:
+  hsa_structs_and_algo_net:
+    name: hsa_structs_and_algo_net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.125.0/24
